@@ -5,7 +5,7 @@ async function loadHistory() {
   try {
     const historyItems = await chrome.history.search({
       text: '',
-      maxResults: 1000,
+      maxResults: 500, // 500件に制限してパフォーマンス向上
       startTime: Date.now() - 7 * 24 * 60 * 60 * 1000 // 過去7日間
     });
     
@@ -27,6 +27,7 @@ function displayHistory(historyItems) {
     return;
   }
   
+  // まず一気にHTMLを生成（faviconなし）
   historyList.innerHTML = historyItems.map(item => {
     const date = new Date(item.lastVisitTime);
     const timeStr = formatDate(date);
@@ -34,10 +35,13 @@ function displayHistory(historyItems) {
     
     return `
       <div class="history-item" data-url="${escapeHtml(item.url)}">
+        <img class="favicon" data-domain="${new URL(item.url).hostname}" alt="" width="16" height="16">
         <div class="history-item-content">
           <div class="history-item-title">${escapeHtml(title)}</div>
-          <div class="history-item-url">${escapeHtml(item.url)}</div>
-          <div class="history-item-time">${timeStr}</div>
+          <div class="history-item-meta">
+            <span class="history-item-url">${escapeHtml(item.url)}</span>
+            <span class="history-item-time">${timeStr}</span>
+          </div>
         </div>
         <button class="new-tab-btn" title="新しいタブで開く">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="16" height="16">
@@ -49,6 +53,14 @@ function displayHistory(historyItems) {
       </div>
     `;
   }).join('');
+  
+  // faviconを遅延読み込み
+  requestIdleCallback(() => {
+    historyList.querySelectorAll('.favicon').forEach(img => {
+      const domain = img.dataset.domain;
+      img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    });
+  }, { timeout: 100 });
   
   // クリックイベントを追加
   historyList.querySelectorAll('.history-item').forEach(item => {
