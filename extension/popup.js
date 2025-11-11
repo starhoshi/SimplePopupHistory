@@ -1,10 +1,10 @@
 let allHistory = [];
 
 function init() {
-  // i18n適用
+  // Apply i18n
   applyI18n();
   
-  // 初期表示は20件だけ
+  // Load initial 20 items
   chrome.history.search({
     text: '',
     maxResults: 20,
@@ -14,7 +14,7 @@ function init() {
     displayHistory(items);
     document.getElementById('app').style.visibility = 'visible';
     
-    // ポップアップ表示後に残りを遅延ロード
+    // Lazy load remaining items after popup is displayed
     setTimeout(() => {
       loadMoreHistory();
     }, 100);
@@ -22,13 +22,13 @@ function init() {
 }
 
 function applyI18n() {
-  // data-i18n属性の要素
+  // Elements with data-i18n attribute
   document.querySelectorAll('[data-i18n]').forEach(element => {
     const key = element.getAttribute('data-i18n');
     element.textContent = chrome.i18n.getMessage(key);
   });
   
-  // data-i18n-placeholder属性の要素
+  // Elements with data-i18n-placeholder attribute
   document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
     const key = element.getAttribute('data-i18n-placeholder');
     element.placeholder = chrome.i18n.getMessage(key);
@@ -42,7 +42,7 @@ function loadMoreHistory() {
     startTime: Date.now() - 7 * 24 * 60 * 60 * 1000
   }, (items) => {
     allHistory = items;
-    // 検索中でなければ表示を更新
+    // Update display if not searching
     const searchBar = document.getElementById('searchBar');
     if (!searchBar.value) {
       displayHistory(items);
@@ -91,7 +91,7 @@ function displayHistory(items) {
     const url = item.dataset.url;
     const title = item.dataset.title;
     
-    // タイトルコピーボタン
+    // Copy title button
     const copyTitleBtn = item.querySelector('.copy-title');
     const titleRow = item.querySelector('.title-row');
     
@@ -101,12 +101,12 @@ function displayHistory(items) {
       showCopyFeedback(copyTitleBtn, checkIcon);
     });
     
-    // ホバーが外れたらコピーアイコンに戻す
+    // Reset to copy icon on mouse leave
     titleRow.addEventListener('mouseleave', () => {
       resetCopyButton(copyTitleBtn, copyIcon);
     });
     
-    // URLコピーボタン
+    // Copy URL button
     const copyUrlBtn = item.querySelector('.copy-url');
     const urlRow = item.querySelector('.url-row');
     
@@ -116,12 +116,12 @@ function displayHistory(items) {
       showCopyFeedback(copyUrlBtn, checkIcon);
     });
     
-    // ホバーが外れたらコピーアイコンに戻す
+    // Reset to copy icon on mouse leave
     urlRow.addEventListener('mouseleave', () => {
       resetCopyButton(copyUrlBtn, copyIcon);
     });
     
-    // アイテムクリック
+    // Item click
     item.addEventListener('click', (e) => {
       if (e.target.closest('.copy-btn')) {
         return;
@@ -137,13 +137,13 @@ function displayHistory(items) {
 }
 
 function showCopyFeedback(button, checkIcon) {
-  // チェックアイコンに変更
+  // Change to check icon
   button.innerHTML = checkIcon;
   button.style.color = '#1a73e8';
 }
 
 function resetCopyButton(button, copyIcon) {
-  // コピーアイコンに戻す
+  // Reset to copy icon
   button.innerHTML = copyIcon;
   button.style.color = '';
 }
@@ -171,7 +171,7 @@ function escapeHtml(text) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  // 検索機能
+  // Search functionality
   document.getElementById('searchBar').addEventListener('input', (e) => {
     const search = e.target.value.toLowerCase();
     const filtered = search ? allHistory.filter(item => {
@@ -181,7 +181,7 @@ window.addEventListener('DOMContentLoaded', () => {
     displayHistory(filtered);
   });
   
-  // 履歴全件確認ボタン
+  // View all history button
   document.getElementById('viewAllHistory').addEventListener('click', (e) => {
     const historyUrl = 'chrome://history/';
     if (e.metaKey || e.ctrlKey) {
