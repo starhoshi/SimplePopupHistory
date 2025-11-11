@@ -41,6 +41,10 @@ function displayHistory(items) {
     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
   </svg>`;
   
+  const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>`;
+  
   list.innerHTML = items.map(item => {
     const title = item.title || item.url;
     const time = formatDate(new Date(item.lastVisitTime));
@@ -48,7 +52,7 @@ function displayHistory(items) {
     
     return `
       <div class="history-item" data-url="${escapeHtml(item.url)}" data-title="${escapeHtml(title)}">
-        <img class="favicon" src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" width="16" height="16" alt="">
+        <img class="favicon" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" width="24" height="24" alt="">
         <div class="history-item-content">
           <div class="title-row">
             <div class="history-item-title">${escapeHtml(title)}</div>
@@ -72,16 +76,32 @@ function displayHistory(items) {
     
     // タイトルコピーボタン
     const copyTitleBtn = item.querySelector('.copy-title');
+    const titleRow = item.querySelector('.title-row');
+    
     copyTitleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       navigator.clipboard.writeText(title);
+      showCopyFeedback(copyTitleBtn, checkIcon);
+    });
+    
+    // ホバーが外れたらコピーアイコンに戻す
+    titleRow.addEventListener('mouseleave', () => {
+      resetCopyButton(copyTitleBtn, copyIcon);
     });
     
     // URLコピーボタン
     const copyUrlBtn = item.querySelector('.copy-url');
+    const urlRow = item.querySelector('.url-row');
+    
     copyUrlBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       navigator.clipboard.writeText(url);
+      showCopyFeedback(copyUrlBtn, checkIcon);
+    });
+    
+    // ホバーが外れたらコピーアイコンに戻す
+    urlRow.addEventListener('mouseleave', () => {
+      resetCopyButton(copyUrlBtn, copyIcon);
     });
     
     // アイテムクリック
@@ -97,6 +117,18 @@ function displayHistory(items) {
       }
     });
   });
+}
+
+function showCopyFeedback(button, checkIcon) {
+  // チェックアイコンに変更
+  button.innerHTML = checkIcon;
+  button.style.color = '#1a73e8';
+}
+
+function resetCopyButton(button, copyIcon) {
+  // コピーアイコンに戻す
+  button.innerHTML = copyIcon;
+  button.style.color = '';
 }
 
 function formatDate(date) {
@@ -117,6 +149,7 @@ function escapeHtml(text) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  // 検索機能
   document.getElementById('searchBar').addEventListener('input', (e) => {
     const search = e.target.value.toLowerCase();
     const filtered = search ? allHistory.filter(item => {
@@ -124,6 +157,16 @@ window.addEventListener('DOMContentLoaded', () => {
              item.url.toLowerCase().includes(search);
     }) : allHistory;
     displayHistory(filtered);
+  });
+  
+  // 履歴全件確認ボタン
+  document.getElementById('viewAllHistory').addEventListener('click', (e) => {
+    const historyUrl = 'chrome://history/';
+    if (e.metaKey || e.ctrlKey) {
+      chrome.tabs.create({ url: historyUrl });
+    } else {
+      chrome.tabs.update({ url: historyUrl });
+    }
   });
   
   init();
