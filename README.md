@@ -6,7 +6,7 @@ A Chrome extension that displays and searches browsing history in a popup.
 
 ## Features
 
-- Display browsing history (up to 1000 most recent items)
+- Display browsing history (up to 1000 items from the past 30 days)
 - Real-time search functionality (titles and URLs)
 - Copy titles and URLs with one click
 - Visual feedback when copying
@@ -83,7 +83,7 @@ sips -z 128 128 design/icon512.png --out extension/icon128.png
 ### Chrome APIs Used
 
 - **Chrome History API** (`chrome.history.search`)
-  - Retrieves browsing history from the past 7 days
+  - Retrieves browsing history from the past 30 days
   - Maximum 1000 items per query due to API limitations
   - Searches by text, title, and URL
 

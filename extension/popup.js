@@ -3,16 +3,18 @@ let allHistory = [];
 function init() {
   // Apply i18n
   applyI18n();
-  
-  // Load initial 20 items
+
+  // Load initial 20 items from the past 30 days
+  const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
   chrome.history.search({
     text: '',
+    startTime: thirtyDaysAgo,
     maxResults: 20
   }, (items) => {
     allHistory = items;
     displayHistory(items);
     document.getElementById('app').style.visibility = 'visible';
-    
+
     // Lazy load remaining items after popup is displayed
     setTimeout(() => {
       loadMoreHistory();
@@ -35,8 +37,11 @@ function applyI18n() {
 }
 
 function loadMoreHistory() {
+  // Load up to 1000 items from the past 30 days
+  const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
   chrome.history.search({
     text: '',
+    startTime: thirtyDaysAgo,
     maxResults: 1000
   }, (items) => {
     allHistory = items;

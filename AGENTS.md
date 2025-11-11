@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Simple Popup History is a Chrome extension that displays browsing history from the past 7 days in a searchable popup. It complies with Manifest V3 and features real-time search, copy functionality, and light/dark mode support.
+Simple Popup History is a Chrome extension that displays browsing history from the past 30 days in a searchable popup. It complies with Manifest V3 and features real-time search, copy functionality, and light/dark mode support.
 
 ## Directory Structure
 
@@ -28,7 +28,7 @@ Simple Popup History is a Chrome extension that displays browsing history from t
 1. **Initialization Flow** (`init()`)
    - Initially displays only 20 items for instant popup rendering
    - Lazy loads remaining 980 items in background after 100ms (max 1000 items)
-   - Chrome History API: Retrieves history from the past 7 days
+   - Chrome History API: Retrieves history from the past 30 days
 
 2. **History Display** (`displayHistory()`)
    - Favicons use Google's favicon service (64px size)
@@ -167,5 +167,5 @@ Set values to these elements using `chrome.i18n.getMessage()` during JavaScript 
 - **Security**: XSS prevention via `escapeHtml()`, no external scripts
 - **Accessibility**: Keeps UI clean by showing copy buttons only on hover
 - **Responsive Design**: Fixed-size popup (480x550px)
-- **History Retrieval Limits**: Chrome History API constraints limit to max 1000 items from past 7 days
+- **History Retrieval Limits**: Chrome History API constraints limit to max 1000 items from past 30 days
 - **Internationalization**: Full multilingual support via Chrome i18n API, automatic switching based on browser settings
