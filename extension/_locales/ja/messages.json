@@ -1,0 +1,57 @@
+{
+  "extName": {
+    "message": "Simple Popup History",
+    "description": "拡張機能の名前"
+  },
+  "extDescription": {
+    "message": "Chrome の閲覧履歴を検索可能な一覧で表示します",
+    "description": "拡張機能の説明"
+  },
+  "searchPlaceholder": {
+    "message": "履歴を検索...",
+    "description": "検索欄のプレースホルダー"
+  },
+  "viewAllHistory": {
+    "message": "履歴を全件確認する",
+    "description": "履歴ページを開くボタン"
+  },
+  "copyTitle": {
+    "message": "タイトルをコピー",
+    "description": "タイトルコピーボタンのツールチップ"
+  },
+  "copyUrl": {
+    "message": "URLをコピー",
+    "description": "URLコピーボタンのツールチップ"
+  },
+  "justNow": {
+    "message": "たった今",
+    "description": "直近の時刻表示"
+  },
+  "minutesAgo": {
+    "message": "$COUNT$分前",
+    "description": "分単位の時刻表示",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$COUNT$時間前",
+    "description": "時間単位の時刻表示",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$COUNT$日前",
+    "description": "日単位の時刻表示",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  }
+}

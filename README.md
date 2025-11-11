@@ -1,70 +1,88 @@
 # Simple Popup History
 
-Chromeの閲覧履歴を検索可能な一覧で表示する拡張機能です。
+A Chrome extension that displays and searches browsing history in a popup.
 
-## 機能
+[日本語版 README はこちら](./README_ja.md)
 
-- 過去7日間の閲覧履歴を表示（最大1000件）
-- リアルタイム検索機能（タイトル・URL対応）
-- タイトル・URLのコピー機能
-- コピー完了のビジュアルフィードバック
-- ライト/ダークモード対応
-- Cmd/Ctrlクリックで新しいタブで開く
-- Chrome履歴ページへの遷移機能
+## Features
 
-## インストール方法
+- Display browsing history from the past 7 days (up to 1000 items)
+- Real-time search functionality (titles and URLs)
+- Copy titles and URLs with one click
+- Visual feedback when copying
+- Light/Dark mode support
+- Open in new tab with Cmd/Ctrl+Click
+- Navigate to Chrome history page
 
-### 開発版（ローカル）
+## Installation
 
-1. Chrome で `chrome://extensions/` を開く
-2. 右上の「デベロッパーモード」をONにする
-3. 「パッケージ化されていない拡張機能を読み込む」をクリック
-4. `extension/` フォルダを選択
+### Local Development
 
-### Chrome Web Store版
+1. Open `chrome://extensions/` in Chrome
+2. Enable "Developer mode" (top right)
+3. Click "Load unpacked"
+4. Select the `extension/` folder
 
-（公開後にリンクを追加）
+### Chrome Web Store
 
-## ディレクトリ構成
+(Link will be added after publication)
+
+## Directory Structure
 
 ```
 browserhistory/
-├── extension/              # Chrome拡張の公開用ファイル
+├── extension/              # Production-ready extension files
 │   ├── manifest.json
 │   ├── popup.html
 │   ├── popup.js
 │   ├── icon16.png
 │   ├── icon48.png
-│   └── icon128.png
-├── design/                 # デザイン素材
-│   ├── icon512.png         # アイコン元画像
+│   ├── icon128.png
+│   └── _locales/           # Internationalization
+│       ├── en/
+│       │   └── messages.json
+│       └── ja/
+│           └── messages.json
+├── design/                 # Design assets
+│   ├── icon512.png
 │   ├── icon.svg
-│   └── simplepopuphistory.key  # Keynoteファイル
+│   └── simplepopuphistory.key
 └── README.md
 ```
 
-## 開発
+## Development
 
-### アイコンを更新する場合
+### Updating Icons
 
 ```bash
-# design/icon512.png から各サイズを生成
+# Generate from design/icon512.png
 cd /path/to/browserhistory
 sips -z 16 16 design/icon512.png --out extension/icon16.png
 sips -z 48 48 design/icon512.png --out extension/icon48.png
 sips -z 128 128 design/icon512.png --out extension/icon128.png
 ```
 
-### リリース手順
+### Adding Languages
 
-1. `extension/` ディレクトリの内容を確認
-2. `extension/` フォルダをZIP化
+1. Create a new folder in `extension/_locales/` (e.g., `fr/`)
+2. Copy `messages.json` from `en/` or `ja/`
+3. Translate all message values
+
+### Release Process
+
+1. Verify contents of `extension/` directory
+2. Create ZIP file:
    ```bash
    cd extension
    zip -r ../simple-popup-history.zip .
    ```
-3. Chrome Web Store Developer Dashboardにアップロード
+3. Upload to Chrome Web Store Developer Dashboard
 
-## ライセンス
+## Supported Languages
+
+- English (default)
+- Japanese (日本語)
+
+## License
 
 MIT

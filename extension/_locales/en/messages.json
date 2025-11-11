@@ -1,0 +1,57 @@
+{
+  "extName": {
+    "message": "Simple Popup History",
+    "description": "Name of the extension"
+  },
+  "extDescription": {
+    "message": "Display and search Chrome browsing history in a popup",
+    "description": "Description of the extension"
+  },
+  "searchPlaceholder": {
+    "message": "Search history...",
+    "description": "Placeholder text for search input"
+  },
+  "viewAllHistory": {
+    "message": "View All History",
+    "description": "Button text to open chrome://history"
+  },
+  "copyTitle": {
+    "message": "Copy title",
+    "description": "Tooltip for copy title button"
+  },
+  "copyUrl": {
+    "message": "Copy URL",
+    "description": "Tooltip for copy URL button"
+  },
+  "justNow": {
+    "message": "Just now",
+    "description": "Time format for very recent items"
+  },
+  "minutesAgo": {
+    "message": "$COUNT$ minutes ago",
+    "description": "Time format for minutes",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$COUNT$ hours ago",
+    "description": "Time format for hours",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$COUNT$ days ago",
+    "description": "Time format for days",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  }
+}

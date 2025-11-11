@@ -1,6 +1,9 @@
 let allHistory = [];
 
 function init() {
+  // i18n適用
+  applyI18n();
+  
   // 初期表示は20件だけ
   chrome.history.search({
     text: '',
@@ -15,6 +18,20 @@ function init() {
     setTimeout(() => {
       loadMoreHistory();
     }, 100);
+  });
+}
+
+function applyI18n() {
+  // data-i18n属性の要素
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    element.textContent = chrome.i18n.getMessage(key);
+  });
+  
+  // data-i18n-placeholder属性の要素
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    element.placeholder = chrome.i18n.getMessage(key);
   });
 }
 
@@ -56,12 +73,12 @@ function displayHistory(items) {
         <div class="history-item-content">
           <div class="title-row">
             <div class="history-item-title">${escapeHtml(title)}</div>
-            <button class="copy-btn copy-title" title="タイトルをコピー">${copyIcon}</button>
+            <button class="copy-btn copy-title" title="${chrome.i18n.getMessage('copyTitle')}">${copyIcon}</button>
           </div>
           <div class="history-item-meta">
             <div class="url-row">
               <span class="history-item-url">${escapeHtml(item.url)}</span>
-              <button class="copy-btn copy-url" title="URLをコピー">${copyIcon}</button>
+              <button class="copy-btn copy-url" title="${chrome.i18n.getMessage('copyUrl')}">${copyIcon}</button>
             </div>
             <span class="history-item-time">${time}</span>
           </div>
@@ -135,10 +152,15 @@ function formatDate(date) {
   const diff = Date.now() - date;
   const abs = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
   
-  if (diff < 60000) return `たった今 (${abs})`;
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}分前 (${abs})`;
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}時間前 (${abs})`;
-  if (diff < 604800000) return `${Math.floor(diff / 86400000)}日前 (${abs})`;
+  if (diff < 60000) {
+    return `${chrome.i18n.getMessage('justNow')} (${abs})`;
+  } else if (diff < 3600000) {
+    return `${chrome.i18n.getMessage('minutesAgo', [Math.floor(diff / 60000)])} (${abs})`;
+  } else if (diff < 86400000) {
+    return `${chrome.i18n.getMessage('hoursAgo', [Math.floor(diff / 3600000)])} (${abs})`;
+  } else if (diff < 604800000) {
+    return `${chrome.i18n.getMessage('daysAgo', [Math.floor(diff / 86400000)])} (${abs})`;
+  }
   return abs;
 }
 

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Simple Popup History",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Chrome の閲覧履歴を検索可能な一覧で表示します",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "permissions": [
     "history"
   ],
