@@ -25,7 +25,7 @@ Chromeの閲覧履歴を検索可能な一覧で表示する拡張機能です�
 
 ### Chrome Web Store版
 
-（公開後にリンクを追加）
+[Chrome Web Storeからインストール](https://chromewebstore.google.com/detail/simple-popup-history/kceolimggmhbcildnddcfnnoogiegijd)
 
 ## ディレクトリ構成
 

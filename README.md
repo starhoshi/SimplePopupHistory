@@ -25,7 +25,7 @@ A Chrome extension that displays and searches browsing history in a popup.
 
 ### Chrome Web Store
 
-(Link will be added after publication)
+[Install from Chrome Web Store](https://chromewebstore.google.com/detail/simple-popup-history/kceolimggmhbcildnddcfnnoogiegijd)
 
 ## Directory Structure
 
