@@ -6,7 +6,7 @@ A Chrome extension that displays and searches browsing history in a popup.
 
 ## Features
 
-- Display browsing history from the past 7 days (up to 1000 items)
+- Display browsing history (up to 1000 most recent items)
 - Real-time search functionality (titles and URLs)
 - Copy titles and URLs with one click
 - Visual feedback when copying

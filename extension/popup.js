@@ -7,8 +7,7 @@ function init() {
   // Load initial 20 items
   chrome.history.search({
     text: '',
-    maxResults: 20,
-    startTime: Date.now() - 7 * 24 * 60 * 60 * 1000
+    maxResults: 20
   }, (items) => {
     allHistory = items;
     displayHistory(items);
@@ -38,8 +37,7 @@ function applyI18n() {
 function loadMoreHistory() {
   chrome.history.search({
     text: '',
-    maxResults: 1000,
-    startTime: Date.now() - 7 * 24 * 60 * 60 * 1000
+    maxResults: 1000
   }, (items) => {
     allHistory = items;
     // Update display if not searching
