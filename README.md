@@ -1,32 +1,70 @@
-# 履歴ビューアー Chrome拡張機能
+# Simple Popup History
 
-Chrome の閲覧履歴を検索可能な一覧で表示する拡張機能です。
+Chromeの閲覧履歴を検索可能な一覧で表示する拡張機能です。
 
 ## 機能
 
-- 過去7日間の閲覧履歴を表示
+- 過去7日間の閲覧履歴を表示（最大1000件）
 - リアルタイム検索機能（タイトル・URL対応）
-- 履歴アイテムをクリックして新しいタブで開く
-- 相対時間表示（〇分前、〇時間前など）
+- タイトル・URLのコピー機能
+- コピー完了のビジュアルフィードバック
+- ライト/ダークモード対応
+- Cmd/Ctrlクリックで新しいタブで開く
+- Chrome履歴ページへの遷移機能
 
 ## インストール方法
+
+### 開発版（ローカル）
 
 1. Chrome で `chrome://extensions/` を開く
 2. 右上の「デベロッパーモード」をONにする
 3. 「パッケージ化されていない拡張機能を読み込む」をクリック
-4. このフォルダを選択
+4. `extension/` フォルダを選択
 
-## 使い方
+### Chrome Web Store版
 
-1. ツールバーの拡張機能アイコンをクリック
-2. ポップアップで履歴が表示されます
-3. 検索バーに入力して履歴を絞り込み
-4. 履歴項目をクリックして開く
+（公開後にリンクを追加）
 
-## ファイル構成
+## ディレクトリ構成
 
-- `manifest.json` - 拡張機能の設定ファイル
-- `popup.html` - ポップアップのHTML
-- `popup.css` - ポップアップのスタイル
-- `popup.js` - 履歴取得・検索機能
-- `icon16.svg`, `icon48.svg`, `icon128.svg` - 拡張機能のアイコン
+```
+browserhistory/
+├── extension/              # Chrome拡張の公開用ファイル
+│   ├── manifest.json
+│   ├── popup.html
+│   ├── popup.js
+│   ├── icon16.png
+│   ├── icon48.png
+│   └── icon128.png
+├── design/                 # デザイン素材
+│   ├── icon512.png         # アイコン元画像
+│   ├── icon.svg
+│   └── simplepopuphistory.key  # Keynoteファイル
+└── README.md
+```
+
+## 開発
+
+### アイコンを更新する場合
+
+```bash
+# design/icon512.png から各サイズを生成
+cd /path/to/browserhistory
+sips -z 16 16 design/icon512.png --out extension/icon16.png
+sips -z 48 48 design/icon512.png --out extension/icon48.png
+sips -z 128 128 design/icon512.png --out extension/icon128.png
+```
+
+### リリース手順
+
+1. `extension/` ディレクトリの内容を確認
+2. `extension/` フォルダをZIP化
+   ```bash
+   cd extension
+   zip -r ../simple-popup-history.zip .
+   ```
+3. Chrome Web Store Developer Dashboardにアップロード
+
+## ライセンス
+
+MIT
