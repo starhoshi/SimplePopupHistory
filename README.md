@@ -78,6 +78,43 @@ sips -z 128 128 design/icon512.png --out extension/icon128.png
    ```
 3. Upload to Chrome Web Store Developer Dashboard
 
+## Technical Implementation
+
+### Chrome APIs Used
+
+- **Chrome History API** (`chrome.history.search`)
+  - Retrieves browsing history from the past 7 days
+  - Maximum 1000 items per query due to API limitations
+  - Searches by text, title, and URL
+
+- **Chrome i18n API** (`chrome.i18n`)
+  - Full internationalization support
+  - Automatic language selection based on browser settings
+
+- **Chrome Tabs API** (`chrome.tabs`)
+  - Navigation to history items
+  - Support for opening in new tabs
+
+### Performance Optimizations
+
+- **Lazy Loading**: Initially loads only 20 items for instant popup display
+- **Background Loading**: Loads remaining items (up to 1000) after 100ms
+- **Smart Re-rendering**: Only updates display when search is not active
+
+### Security Features
+
+- **XSS Prevention**: All user-generated content is escaped using `escapeHtml()`
+- **No External Scripts**: All code is inline for security
+- **Manifest V3**: Uses the latest Chrome extension security standards
+- **Minimal Permissions**: Only requests `history` permission
+
+### Architecture
+
+- **Single-file Implementation**: Self-contained `popup.js` with no dependencies
+- **Inline CSS**: All styles in `popup.html` for CSP compliance
+- **Event-driven**: Uses native DOM events for all interactions
+- **Responsive UI**: Fixed 480x550px popup with efficient scrolling
+
 ## Supported Languages
 
 - English (default)
