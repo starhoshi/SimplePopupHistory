@@ -4,7 +4,7 @@
     "description": "拡張機能の名前"
   },
   "extDescription": {
-    "message": "Chrome の閲覧履歴を検索可能な一覧で表示します",
+    "message": "Chromeの閲覧履歴をポップアップで簡単に確認・検索できる拡張機能です",
     "description": "拡張機能の説明"
   },
   "searchPlaceholder": {
