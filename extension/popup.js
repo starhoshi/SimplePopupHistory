@@ -15,9 +15,6 @@ function init() {
     displayHistory(items);
     document.getElementById('app').style.visibility = 'visible';
 
-    // Auto-focus search bar
-    document.getElementById('searchBar').focus();
-
     // Lazy load remaining items after popup is displayed
     setTimeout(() => {
       loadMoreHistory();
@@ -31,7 +28,7 @@ function applyI18n() {
     const key = element.getAttribute('data-i18n');
     element.textContent = chrome.i18n.getMessage(key);
   });
-  
+
   // Elements with data-i18n-placeholder attribute
   document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
     const key = element.getAttribute('data-i18n-placeholder');
@@ -58,21 +55,21 @@ function loadMoreHistory() {
 
 function displayHistory(items) {
   const list = document.getElementById('historyList');
-  
+
   const copyIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
   </svg>`;
-  
+
   const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>`;
-  
+
   list.innerHTML = items.map(item => {
     const title = item.title || item.url;
     const time = formatDate(new Date(item.lastVisitTime));
     const domain = new URL(item.url).hostname;
-    
+
     return `
       <div class="history-item" data-url="${escapeHtml(item.url)}" data-title="${escapeHtml(title)}">
         <img class="favicon" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" width="24" height="24" alt="">
@@ -92,41 +89,41 @@ function displayHistory(items) {
       </div>
     `;
   }).join('');
-  
+
   list.querySelectorAll('.history-item').forEach(item => {
     const url = item.dataset.url;
     const title = item.dataset.title;
-    
+
     // Copy title button
     const copyTitleBtn = item.querySelector('.copy-title');
     const titleRow = item.querySelector('.title-row');
-    
+
     copyTitleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       navigator.clipboard.writeText(title);
       showCopyFeedback(copyTitleBtn, checkIcon);
     });
-    
+
     // Reset to copy icon on mouse leave
     titleRow.addEventListener('mouseleave', () => {
       resetCopyButton(copyTitleBtn, copyIcon);
     });
-    
+
     // Copy URL button
     const copyUrlBtn = item.querySelector('.copy-url');
     const urlRow = item.querySelector('.url-row');
-    
+
     copyUrlBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       navigator.clipboard.writeText(url);
       showCopyFeedback(copyUrlBtn, checkIcon);
     });
-    
+
     // Reset to copy icon on mouse leave
     urlRow.addEventListener('mouseleave', () => {
       resetCopyButton(copyUrlBtn, copyIcon);
     });
-    
+
     // Item click
     item.addEventListener('click', (e) => {
       if (e.target.closest('.copy-btn')) {
@@ -160,7 +157,7 @@ function resetCopyButton(button, copyIcon) {
 function formatDate(date) {
   const diff = Date.now() - date;
   const abs = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
-  
+
   if (diff < 60000) {
     return `${chrome.i18n.getMessage('justNow')} (${abs})`;
   } else if (diff < 3600000) {
@@ -184,12 +181,12 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('searchBar').addEventListener('input', (e) => {
     const search = e.target.value.toLowerCase();
     const filtered = search ? allHistory.filter(item => {
-      return (item.title || '').toLowerCase().includes(search) || 
-             item.url.toLowerCase().includes(search);
+      return (item.title || '').toLowerCase().includes(search) ||
+        item.url.toLowerCase().includes(search);
     }) : allHistory;
     displayHistory(filtered);
   });
-  
+
   // View all history button
   document.getElementById('viewAllHistory').addEventListener('click', (e) => {
     const historyUrl = 'chrome://history/';
@@ -202,6 +199,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // Close popup after navigation
     window.close();
   });
-  
+
   init();
 });
