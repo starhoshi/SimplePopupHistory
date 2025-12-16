@@ -15,6 +15,9 @@ function init() {
     displayHistory(items);
     document.getElementById('app').style.visibility = 'visible';
 
+    // Auto-focus search bar
+    document.getElementById('searchBar').focus();
+
     // Lazy load remaining items after popup is displayed
     setTimeout(() => {
       loadMoreHistory();
@@ -129,12 +132,15 @@ function displayHistory(items) {
       if (e.target.closest('.copy-btn')) {
         return;
       }
-      
+
       if (e.metaKey || e.ctrlKey) {
         chrome.tabs.create({ url });
       } else {
         chrome.tabs.update({ url });
       }
+
+      // Close popup after navigation
+      window.close();
     });
   });
 }
@@ -192,6 +198,9 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
       chrome.tabs.update({ url: historyUrl });
     }
+
+    // Close popup after navigation
+    window.close();
   });
   
   init();
