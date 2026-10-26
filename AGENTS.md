@@ -1,6 +1,4 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+# AGENTS.md
 
 ## Project Overview
 
@@ -56,3 +54,5 @@ This extension uses the Chrome i18n API for multilingual support.
 - **Responsive Design**: Fixed-size popup (480x550px)
 - **History Retrieval Limits**: Chrome History API constraints limit to max 1000 items from past 30 days
 - **Internationalization**: Full multilingual support via Chrome i18n API, automatic switching based on browser settings
+
+文書だけの変更は、内容・参照先・差分を確認する。アプリのビルド・起動・配布は不要。
